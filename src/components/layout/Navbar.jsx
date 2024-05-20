@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from "react";
+import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar bg-success">
@@ -9,11 +9,11 @@ function Navbar() {
       <ul>
         <li>
           <a href="#>">Home</a>
-          <a href="#>">About</a>
+          <Link to="/about">About</Link>
         </li>
       </ul>
     </nav>
   );
 }
 
-export default Navbar
+export default Navbar;
