@@ -109,6 +109,12 @@ img {
   text-align: center;
 }
 
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 1rem;
+}
+
 /* Cards */
 .card {
   padding: 1rem;
