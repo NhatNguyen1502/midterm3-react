@@ -1,13 +1,15 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
+import Users from "./components/users/User";
 function App() {
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://api.github.com/users");
-        console.log("GitHub Users:", response.data);
+        setUsers(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -20,7 +22,10 @@ function App() {
       <div className="container">
         <h1>Hello from React</h1>
       </div>
+      <Users users={users} />
     </div>
   );
 }
 export default App;
+
+
