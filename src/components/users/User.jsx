@@ -2,36 +2,25 @@ import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Repos from "../repos/Repos";
+import { getUser, getUserRepos } from "../../api";
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
-  const getUser = async (username) => {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}`
-      );
-      const data = response.data;
-      setUser(data);
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-    }
-  };
-  const getUserRepos = async (username) => {
-    try {
-      const response = await axios.get(
-        `https://api.github.com/users/${username}/repos`
-      );
-      const data = response.data;
-      setRepos(data);
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-    }
-  };
   useEffect(() => {
-    getUser(id);
-    getUserRepos(id);
-  }, []);
+    const fetchUser = async () => {
+      const userData = await getUser(id);
+      setUser(userData);
+    };
+    fetchUser();
+
+    const fetchRepos = async () => {
+      const repoData = await getUserRepos(id);
+      setRepos(repoData);
+    };
+    fetchRepos();
+  }, [id]);
+ 
   const {
     name,
     avatar_url,
@@ -76,12 +65,7 @@ const User = () => {
               <p>{bio}</p>
             </Fragment>
           )}
-          <a
-            href={html_url}
-            className="btn btn-dark my-1"
-            target="_blank"
-            
-          >
+          <a href={html_url} className="btn btn-dark my-1" target="_blank">
             Show Github Profile
           </a>
           <ul>
