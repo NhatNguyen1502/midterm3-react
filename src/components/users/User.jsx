@@ -3,11 +3,13 @@ import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Repos from "../repos/Repos";
 import { getUser, getUserRepos } from "../../api";
 import { ThemeContext } from "../../ThemeContext";
+import { useHistory, useLocation } from "react-router-dom";
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const { darkMode } = useContext(ThemeContext);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,9 +42,9 @@ const User = () => {
   } = user;
   return (
     <Fragment>
-      <Link to="/" className="btn btn-light">
+      <button onClick={() => history.goBack()} className="btn btn-light">
         Back to Search
-      </Link>
+      </button>
       Hireable:{" "}
       {hireable ? (
         <i className="fas fa-check text-success" />
