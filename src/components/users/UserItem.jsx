@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { ThemeContext } from "../../ThemeContext";
 const UserItem = (props) => {
-  const { login, avatar_url, html_url } = props.user;
+  const { login, avatar_url } = props.user;
+  const { darkMode } = useContext(ThemeContext);
   return (
     <div className="card text-center">
       <img
@@ -12,7 +14,10 @@ const UserItem = (props) => {
       />
       <h3>{login}</h3>
       <div>
-        <Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">
+        <Link
+          to={`/user/${login}`}
+          className={`btn  btn-sm my-1 ${darkMode ? "" : "btn-dark"}}`}
+        >
           More
         </Link>
       </div>

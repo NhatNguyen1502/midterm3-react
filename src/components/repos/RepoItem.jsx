@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../../ThemeContext";
 
 function RepoItem({ repo }) {
+  const {darkMode} = useContext(ThemeContext)
   return (
     <div className="card text-center">
       <h3>{repo?.name}</h3>
@@ -18,7 +20,7 @@ function RepoItem({ repo }) {
       <div>
         <a
           href={repo?.clone_url}
-          className="btn btn-dark btn-sm my-1"
+          className={`btn ${darkMode ? "" : "btn-dark"}btn-sm my-1`}
           target="_blank"
           rel="noopener noreferrer"
         >

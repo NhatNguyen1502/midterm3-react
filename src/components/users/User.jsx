@@ -1,12 +1,14 @@
-import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Repos from "../repos/Repos";
 import { getUser, getUserRepos } from "../../api";
+import { ThemeContext } from "../../ThemeContext";
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
+  const { darkMode } = useContext(ThemeContext);
+
   useEffect(() => {
     const fetchUser = async () => {
       const userData = await getUser(id);
@@ -20,7 +22,7 @@ const User = () => {
     };
     fetchRepos();
   }, [id]);
- 
+
   const {
     name,
     avatar_url,
@@ -65,7 +67,11 @@ const User = () => {
               <p>{bio}</p>
             </Fragment>
           )}
-          <a href={html_url} className="btn btn-dark my-1" target="_blank">
+          <a
+            href={html_url}
+            className={`btn my-1 ${darkMode ? "" : "btn-dark"}`}
+            target="_blank"
+          >
             Show Github Profile
           </a>
           <ul>
@@ -102,7 +108,9 @@ const User = () => {
         <div className="badge badge-primary">Followers: {followers}</div>
         <div className="badge badge-success">Following: {following}</div>
         <div className="badge badge-light">Repository: {public_repos}</div>
-        <div className="badge badge-dark">Gist: {public_gists}</div>
+        <div className={`badge ${!darkMode ? "badge-dark" : ""}`}>
+          Gist: {public_gists}
+        </div>
       </div>
       <Repos repos={repos} />
     </Fragment>

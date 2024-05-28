@@ -6,15 +6,18 @@ const Search = () => {
   const [text, setText] = useState("");
   const [users, setUsers] = useState([]);
   const history = useHistory();
-  const query = useLocation();
+  const queryParameter = useLocation();
 
   useEffect(() => {
-    setText(query.search.split("=")[1]);
-    const fetchUser = async () => {
-      const userData = await getUsers(query.search.split("=")[1]);
-      setUsers(userData);
-    };
-    fetchUser();
+    const query = queryParameter.search.split("=")[1];
+    if (query) {
+      setText(query);
+      const fetchUser = async () => {
+        const userData = await getUsers(query);
+        setUsers(userData);
+      };
+      fetchUser();
+    }
   }, []);
 
   const onSubmit = async (e) => {
